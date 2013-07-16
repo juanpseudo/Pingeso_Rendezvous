@@ -37,21 +37,14 @@
     </h:head>
     <h:body>
         <h:form id="form">
-            <p:fieldset  legend="Administrar Trabajadores">
+                <p:fieldset  legend="Administrar Trabajadores">
             
          <h:outputLabel value="Trabajadores:" />  
         <h:outputText value="Trabajadores Registrados" style=" font-weight: bold"/>  
-        <p:selectOneListbox  value="#{managedBeanTrabajador.nombre}" onchange="muestra(this.value)"  style="width:400px;">  
+        <p:selectOneListbox  value="#{managedBeanTrabajador.nombre}" onchange="muestra(this.value);"  style="width:400px;">  
             <f:selectItems value="#{managedBeanTrabajador.trabajadores}"    var="trabajadores" itemLabel="#{trabajadores.rutTrab}" itemValue="#{trabajadores.rutTrab}~#{trabajadores.nombreTrab}~#{trabajadores.apellidoPatTrab}~#{trabajadores.apellidoMatTrab}~#{trabajadores.direccionTrab}~1990-12-12~#{trabajadores.telefonoTrab}~#{trabajadores.correoTrab}~#{trabajadores.idCargo}~#{trabajadores.idComuna}"/>   
         </p:selectOneListbox> 
- 
-
-        
-           
-         
-          
-          
-            </p:fieldset> 
+                </p:fieldset> 
 
             <p:messages showDetail="true"  globalOnly="true"   autoUpdate="true" closable="true" />  
             <p:fieldset legend="Agregar Nuevo Empleado">
@@ -72,7 +65,7 @@
                             <h:outputLabel value="* Rut" />
                         </p:column>
                         <p:column colspan="4">   
-                            <p:inputText  readonly="true" requiredMessage="Completa este campo: Ingrese su RUT, sin puntos ni guión." id="rut" value="#{managedBeanTrabajador.rut_text}" label="Rut" required="true" title="Ingrese su RUT, sin puntos ni guión."/>
+                            <p:inputText  requiredMessage="Completa este campo: Ingrese su RUT, sin puntos ni guión." id="rut" value="#{managedBeanTrabajador.rut_text}" label="Rut" required="true" title="Ingrese su RUT, sin puntos ni guión."/>
                         </p:column>
                         <p:column colspan="4"> 
                             <p:message display="text" for="rut" /> 
@@ -184,9 +177,13 @@
                         </p:column> 
                     </p:row>
                 </p:panelGrid>
-               
+                <p:lightBox styleClass="imagebox">   
+  <h:outputLink value="../imagenes/downloaded_optimus.jpg" title="Sopranos 1">  
+        <h:graphicImage value="/imagenes/downloaded_optimus.jpg"/>  
+</h:outputLink> 
+                </p:lightBox >   
 
-               <p:commandButton  id="infoButton" update="grid" actionListener="#{managedBeanTrabajador.addInfo2}" value="Modificar"  action="#{managedBeanTrabajador.modificarTrabajador()}" />
+                <p:commandButton  id="infoButton" update="grid" actionListener="#{managedBeanTrabajador.addInfo2}" value="Modificar"  action="#{managedBeanTrabajador.modificarTrabajador()}" />
                <p:commandButton update="grid" actionListener="#{managedBeanTrabajador.addInfo3}" value="Eliminar" action="#{managedBeanTrabajador.borrarTrabajador()}"/>
                <p:commandButton value="Cancelar" type="reset"/>
 
