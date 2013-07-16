@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -26,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author juand_000
+ * @author Aileen
  */
 @Entity
 @Table(name = "camion")
@@ -60,7 +61,10 @@ public class Camion implements Serializable {
     @Size(max = 250)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    @ManyToMany(mappedBy = "camionCollection")
+    @JoinTable(name = "asignar_camion", joinColumns = {
+        @JoinColumn(name = "PATENTE", referencedColumnName = "PATENTE")}, inverseJoinColumns = {
+        @JoinColumn(name = "RUT_TRAB", referencedColumnName = "RUT_TRAB")})
+    @ManyToMany
     private Collection<Trabajador> trabajadorCollection;
     @JoinColumn(name = "ID_MODELO", referencedColumnName = "ID_MODELO")
     @ManyToOne

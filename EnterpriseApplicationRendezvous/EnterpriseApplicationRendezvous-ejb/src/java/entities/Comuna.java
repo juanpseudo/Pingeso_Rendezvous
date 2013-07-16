@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author juand_000
+ * @author Aileen
  */
 @Entity
 @Table(name = "comuna")
@@ -99,11 +99,5 @@ public class Comuna implements Serializable {
     public String toString() {
         return "entities.Comuna[ idComuna=" + idComuna + " ]";
     }
-
-    public void setIdComuna(Comuna comun) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
     
 }

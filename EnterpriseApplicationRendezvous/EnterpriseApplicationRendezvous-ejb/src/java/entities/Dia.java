@@ -10,8 +10,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -23,7 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author juand_000
+ * @author Aileen
  */
 @Entity
 @Table(name = "dia")
@@ -39,10 +37,7 @@ public class Dia implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "NOMBRE_DIA")
     private String nombreDia;
-    @JoinTable(name = "dia_solicitud", joinColumns = {
-        @JoinColumn(name = "NOMBRE_DIA", referencedColumnName = "NOMBRE_DIA")}, inverseJoinColumns = {
-        @JoinColumn(name = "ID_SOL", referencedColumnName = "ID_SOL")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "diaCollection")
     private Collection<Solicitud> solicitudCollection;
 
     public Dia() {

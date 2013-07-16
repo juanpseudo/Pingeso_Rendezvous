@@ -10,7 +10,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author juand_000
+ * @author Aileen
  */
 @Local
 public interface CamionFacadeLocal {

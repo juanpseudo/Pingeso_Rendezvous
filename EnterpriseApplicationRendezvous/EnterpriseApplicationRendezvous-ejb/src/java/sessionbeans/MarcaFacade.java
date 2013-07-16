@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author juand_000
+ * @author Aileen
  */
 @Stateless
 public class MarcaFacade extends AbstractFacade<Marca> implements MarcaFacadeLocal {

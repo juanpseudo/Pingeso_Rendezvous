@@ -12,7 +12,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -27,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author juand_000
+ * @author Aileen
  */
 @Entity
 @Table(name = "trabajador")
@@ -69,21 +68,22 @@ public class Trabajador implements Serializable {
     @Column(name = "FECHA_NAC_TRAB")
     @Temporal(TemporalType.DATE)
     private Date fechaNacTrab;
-    @JoinTable(name = "asignar_camion", joinColumns = {
-        @JoinColumn(name = "RUT_TRAB", referencedColumnName = "RUT_TRAB")}, inverseJoinColumns = {
-        @JoinColumn(name = "PATENTE", referencedColumnName = "PATENTE")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "trabajadorCollection")
     private Collection<Camion> camionCollection;
-    @JoinColumn(name = "ID_CARGO", referencedColumnName = "ID_CARGO")
-    @ManyToOne(optional = false)
-    private TipoCargo idCargo;
     @JoinColumn(name = "ID_COMUNA", referencedColumnName = "ID_COMUNA")
     @ManyToOne
     private Comuna idComuna;
+    @JoinColumn(name = "ID_CARGO", referencedColumnName = "ID_CARGO")
+    @ManyToOne(optional = false)
+    private TipoCargo idCargo;
 
     public Trabajador() {
     }
-    public Trabajador(Integer rutTrab, String nombreTrab, String apellidoPatTrab, String apellidoMatTrab,String direccionTrab, Integer telefonoTrab, String correoTrab) {
+
+    public Trabajador(Integer rutTrab) {
+        this.rutTrab = rutTrab;
+    }
+        public Trabajador(Integer rutTrab, String nombreTrab, String apellidoPatTrab, String apellidoMatTrab,String direccionTrab, Integer telefonoTrab, String correoTrab) {
         this.rutTrab = rutTrab;
         this.nombreTrab = nombreTrab;
         this.apellidoPatTrab = apellidoPatTrab;
@@ -166,20 +166,20 @@ public class Trabajador implements Serializable {
         this.camionCollection = camionCollection;
     }
 
-    public TipoCargo getIdCargo() {
-        return idCargo;
-    }
-
-    public void setIdCargo(TipoCargo idCargo) {
-        this.idCargo = idCargo;
-    }
-
     public Comuna getIdComuna() {
         return idComuna;
     }
 
     public void setIdComuna(Comuna idComuna) {
         this.idComuna = idComuna;
+    }
+
+    public TipoCargo getIdCargo() {
+        return idCargo;
+    }
+
+    public void setIdCargo(TipoCargo idCargo) {
+        this.idCargo = idCargo;
     }
 
     @Override

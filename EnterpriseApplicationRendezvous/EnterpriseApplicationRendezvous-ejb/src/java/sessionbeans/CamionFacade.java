@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author juand_000
+ * @author Aileen
  */
 @Stateless
 public class CamionFacade extends AbstractFacade<Camion> implements CamionFacadeLocal {

@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -22,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author juand_000
+ * @author Aileen
  */
 @Entity
 @Table(name = "solicitud")
@@ -43,7 +44,10 @@ public class Solicitud implements Serializable {
     private Integer cantidadSol;
     @Column(name = "ESTADO_SOL")
     private Boolean estadoSol;
-    @ManyToMany(mappedBy = "solicitudCollection")
+    @JoinTable(name = "dia_solicitud", joinColumns = {
+        @JoinColumn(name = "ID_SOL", referencedColumnName = "ID_SOL")}, inverseJoinColumns = {
+        @JoinColumn(name = "NOMBRE_DIA", referencedColumnName = "NOMBRE_DIA")})
+    @ManyToMany
     private Collection<Dia> diaCollection;
     @JoinColumn(name = "ID_PER", referencedColumnName = "ID_PER")
     @ManyToOne

@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author juand_000
+ * @author Aileen
  */
 @Stateless
 public class AuditoriaFacade extends AbstractFacade<Auditoria> implements AuditoriaFacadeLocal {
