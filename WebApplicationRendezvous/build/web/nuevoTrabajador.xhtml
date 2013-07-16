@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Agregar Trabajador</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:messages showDetail="true"  globalOnly="true"   autoUpdate="true" closable="true" />  
+            <p:fieldset legend="Agregar Nuevo Empleado">
+                <font color="red" > * Campos Obligatorios </font>
+
+                    <h:form enctype="multipart/form-data">  
+                        <p:fileUpload label="Examinar" cancelLabel="Cancelar" uploadLabel="Subir" fileUploadListener="#{managedBeanTrabajador.handleFileUpload}"  
+                                mode="advanced"   
+                                update="messages"  
+                                allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                />  
+                        <p:growl id="messages" showDetail="true"/>  
+                    </h:form>  
+                
+                <p:panelGrid id="grid">
+                    <p:row> 
+                        <p:column colspan="4">                                            
+                            <h:outputLabel value="* Rut" />
+                        </p:column>
+                        <p:column colspan="4">   
+                            <p:inputText  requiredMessage="Completa este campo: Ingrese su RUT, sin puntos ni guión." id="rut" value="#{managedBeanTrabajador.rut_text}" label="Rut" required="true" title="Ingrese su RUT, sin puntos ni guión."/>
+                        </p:column>
+                        <p:column colspan="4"> 
+                            <p:message display="text" for="rut" /> 
+                            <p:watermark  for="rut" value="174269211" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="4">  
+                            <h:outputLabel value="* Nombre" />
+                        </p:column> 
+                        <p:column colspan="4">  
+                            <p:inputText requiredMessage="Completa este campo: Ingrese sus nombres, use sólo letras." id="nombre" value="#{managedBeanTrabajador.nombre}" label="Nombre" required="true" title="Use sólo letras en este campo." />
+                        </p:column>
+                        <p:column colspan="4"> 
+                            <p:message display="text" for="nombre" />
+                            <p:watermark  for="nombre" value="Juan Carlos" />
+                        </p:column> 
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="4">  
+                            <h:outputLabel value="* Apellido paterno" />
+                        </p:column> 
+                        <p:column colspan="4">  
+                            <p:inputText requiredMessage="Completa este campo: Ingrese su pellido paterno, use sólo letras." id="apellido_paterno" value="#{managedBeanTrabajador.apellido_pat}" label="Apellido Paterno" required="true" title="Use sólo letras en este campo."/>
+                        </p:column>
+                        <p:column colspan="4"> 
+                                <p:message display="text" for="apellido_paterno" />
+                                <p:watermark  for="apellido_paterno" value="Vargas" />
+                        </p:column> 
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="4">  
+                            <h:outputLabel value="* Apellido materno" />
+                        </p:column>
+                        <p:column colspan="4">  
+                            <p:inputText requiredMessage="Completa este campo: Ingrese su apellido materno, use sólo letras." id="apellido_matermo" value="#{managedBeanTrabajador.apellido_mat}" label="Apellido Materno" required="true" title="Use sólo letras en este campo."/>
+                        </p:column>
+                        <p:column colspan="4"> 
+                            <p:message display="text" for="apellido_matermo" />
+                            <p:watermark  for="apellido_matermo" value="Godoy" />
+                        </p:column> 
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="4">  
+                            <h:outputLabel value="* Dirección" />
+                        </p:column>
+                        <p:column colspan="4">  
+                            <p:inputText requiredMessage="Completa este campo:  Ingrese su dirección." id="direccion" value="#{managedBeanTrabajador.direccion}" title="Ingrese su dirección." label="Dirección" required="true" />
+                        </p:column>
+                         <p:column colspan="4"> 
+                             <p:message display="text" for="direccion" />
+                             <p:watermark  for="direccion" value="Av. Vitacura #6798" />
+                        </p:column> 
+                    </p:row>
+                    <p:row> 
+                        <p:column colspan="4">  
+                            <h:outputLabel value="* Fecha de nacimiento" />
+                        </p:column>
+                        <p:column colspan="4">  
+                            <p:calendar requiredMessage="Completa este campo:  Ingrese su fecha de nacimiento, siga el formato del ejemplo." id="fecha_de_nacimiento" pattern="dd/MM/yyyy" value="#{managedBeanTrabajador.fecha_nac}" label="Fecha de nacimiento" required="true" title="Siga el formato del ejemplo."  showOn="button" /> 
+                        </p:column>
+                        <p:column colspan="4"> 
+                            <p:message display="text" for="fecha_de_nacimiento" />
+                            <p:watermark  for="fecha_de_nacimiento" value="16/02/1990" />
+                        </p:column> 
+                    </p:row>
+                    <p:row> 
+                        <p:column colspan="4">  
+                            <h:outputLabel value="* Teléfono" />
+                        </p:column>
+                        <p:column colspan="4">  
+                            <p:inputText requiredMessage="Completa este campo:  Ingrese su teléfono, use sólo números." id="telefono" value="#{managedBeanTrabajador.telefono_text}" label="Teléfono" required="true" title="Use sólo números en este campo."/>
+                        </p:column>
+                        <p:column colspan="4"> 
+                            <p:message display="text" for="telefono" />
+                            <p:watermark  for="telefono" value="7750283" />
+                        </p:column> 
+                    </p:row>
+                    <p:row> 
+                        <p:column colspan="4">  
+                            <h:outputLabel value="* Correo" />
+                        </p:column>
+                        <p:column colspan="4">  
+                            <p:inputText requiredMessage="Completa este campo: Ingrese su correo, siga el formato del ejemplo." id="correo" value="#{managedBeanTrabajador.correo}" label="Correo" required="true" title="Siga el formato del ejemplo." />
+                        </p:column>
+                        <p:column colspan="4"> 
+                            <p:message display="text" for="correo" />
+                            <p:watermark for="correo" value="alguien@ejemplo.cl" /> 
+                       </p:column> 
+                    </p:row>
+                    <p:row> 
+                        <p:column colspan="4">   
+                            <h:outputText value="Cargo" />  
+                        </p:column>
+                        <p:column colspan="4">  
+                            <p:selectOneMenu value="#{managedBeanTrabajador.cargo_nombre}">   
+                                <f:selectItems value="#{managedBeanCargo.tipoCargos}" var="cargos" itemLabel="#{cargos.nombreCargo}" itemValue="#{cargos}"/>  
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="4">  
+                            <h:outputText value="Comuna" /> 
+                        </p:column>
+                        <p:column colspan="4">  
+                            <p:selectOneMenu value="#{managedBeanTrabajador.comuna_nombre}">   
+                                <f:selectItems value="#{managedBeanComuna.comunas}" var="comunas" itemLabel="#{comunas.nombreComuna}" itemValue="#{comunas}"/>  
+                            </p:selectOneMenu>
+                        </p:column> 
+                    </p:row>
+                </p:panelGrid>
+                <p:lightBox styleClass="imagebox">   
+  <h:outputLink value="../imagenes/downloaded_optimus.jpg" title="Sopranos 1">  
+        <h:graphicImage value="/imagenes/downloaded_optimus.jpg"/>  
+</h:outputLink> 
+                </p:lightBox >   
+
+                <p:commandButton id="infoButton" update="grid" actionListener="#{managedBeanTrabajador.addInfo}" value="Ingresar" action="#{managedBeanTrabajador.nuevoTrabajador()}" />
+                <p:commandButton value="Cancelar" type="reset"/>  
+            </p:fieldset>
+        </h:form>
+    </h:body>
+</html>
+
