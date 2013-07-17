@@ -181,7 +181,6 @@ public class ManagedBeanTrabajador {
     
     public void nuevoTrabajador(){
         Trabajador trabajador;
-        img = file.getContents();
         rut=Integer.parseInt(rut_text);
         telefono=Integer.parseInt(telefono_text);
         trabajador = new Trabajador(rut, nombre, apellido_pat, apellido_mat, direccion, telefono, correo);
