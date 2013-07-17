@@ -14,15 +14,27 @@
             <p:messages showDetail="true"  globalOnly="true"   autoUpdate="true" closable="true" />  
             <p:fieldset legend="Agregar Nuevo Empleado">
                 <font color="red" > * Campos Obligatorios </font>
-
+                <div>  
+                <h:form>  
+                    <p:lightBox id="messages"  styleClass="imagebox">   
+                        <h:outputLink title="Sopranos 1">  
+                            <h:graphicImage  value="http://localhost:8080/WebApplicationRendezvous/imagenes/temporal.jpg" style="height: 150px; width: 150px;" />  
+                        </h:outputLink> 
+                    </p:lightBox >  
+                </h:form>  
+                    
+   
                     <h:form enctype="multipart/form-data">  
-                        <p:fileUpload label="Examinar" cancelLabel="Cancelar" uploadLabel="Subir" fileUploadListener="#{managedBeanTrabajador.handleFileUpload}"  
+                        <p:fileUpload value="#{managedBeanTrabajador.file}" label="Examinar" cancelLabel="Cancelar"  uploadLabel="Subir" fileUploadListener="#{managedBeanTrabajador.handleFileUpload1}"  
                                 mode="advanced"   
                                 update="messages"  
                                 allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
                                 />  
                         <p:growl id="messages" showDetail="true"/>  
-                    </h:form>  
+                    </h:form>   
+                
+                </div>
+
                 
                 <p:panelGrid id="grid">
                     <p:row> 
@@ -142,11 +154,7 @@
                         </p:column> 
                     </p:row>
                 </p:panelGrid>
-                <p:lightBox styleClass="imagebox">   
-  <h:outputLink value="../imagenes/downloaded_optimus.jpg" title="Sopranos 1">  
-        <h:graphicImage value="/imagenes/downloaded_optimus.jpg"/>  
-</h:outputLink> 
-                </p:lightBox >   
+
 
                 <p:commandButton id="infoButton" update="grid" actionListener="#{managedBeanTrabajador.addInfo}" value="Ingresar" action="#{managedBeanTrabajador.nuevoTrabajador()}" />
                 <p:commandButton value="Cancelar" type="reset"/>  

@@ -23,7 +23,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;  
 import sessionbeans.TrabajadorFacadeLocal;
 import javax.faces.application.FacesMessage;  
+import javax.faces.context.ExternalContext;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import org.primefaces.event.FileUploadEvent;  
 import org.primefaces.model.UploadedFile; 
 
@@ -40,10 +42,19 @@ public class ManagedBeanTrabajador {
     /**
      * Creates a new instance of ManagedBeanTrabajador
      */
-     
+    private UploadedFile file;
     private int rut;
     private String rut_text;
     private int cargo;
+
+    public byte[] getImg() {
+        return img;
+    }
+
+    public void setImg(byte[] img) {
+        this.img = img;
+    }
+    private byte[] img;
     private String text;  
     private String Cargo_nombre;
     private String Comuna_nombre;
@@ -58,11 +69,19 @@ public class ManagedBeanTrabajador {
     private List<Trabajador> trabajadores;
     private TipoCargo tipoCargo;
     private Comuna comuna;
-
+    
 
     @PostConstruct
     public void init(){
         trabajadores = trabajadorFacade.findAll();
+    }
+    
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
     }
     public String getTelefono_text() {
         return telefono_text;
@@ -162,6 +181,7 @@ public class ManagedBeanTrabajador {
     
     public void nuevoTrabajador(){
         Trabajador trabajador;
+        img = file.getContents();
         rut=Integer.parseInt(rut_text);
         telefono=Integer.parseInt(telefono_text);
         trabajador = new Trabajador(rut, nombre, apellido_pat, apellido_mat, direccion, telefono, correo);
@@ -190,6 +210,12 @@ public class ManagedBeanTrabajador {
         trabajador.setFechaNacTrab(fecha_nac);
         trabajadorFacade.create(trabajador);
     }
+    public String direc(){
+                 String path = System.getenv("JAVA_HOME");
+            
+        String direc =path+"/img/temporal.jpg";
+        return direc;
+    }
     
     // A continuación se encuentran las funciones de tipos de mensajes
     
@@ -214,11 +240,12 @@ public class ManagedBeanTrabajador {
      
         FacesContext.getCurrentInstance().addMessage(null, msg); 
         try {
-            System.out.println( ": Q mierda es esto???");
-        File targetFolder = new File("C:\\img");
+            String path = System.getenv("JAVA_HOME");
+            System.out.println( ": Q mierda es esto???: "+path);
+            
+        File targetFolder = new File(path+"/img");
         InputStream inputStream = event.getFile().getInputstream();
-        OutputStream out = new FileOutputStream(new File(targetFolder,
-        event.getFile().getFileName()));
+        OutputStream out = new FileOutputStream(new File(targetFolder, "temporal.jpg"));
         int read = 0;
         byte[] bytes = new byte[1024];
         while ((read = inputStream.read(bytes)) != -1) {
@@ -231,9 +258,7 @@ public class ManagedBeanTrabajador {
         e.printStackTrace();
         }
 }
-            
-   
-    
+  
     public void save(ActionEvent actionEvent) {  
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Successful", "Hello " + text));  
@@ -306,10 +331,69 @@ public class ManagedBeanTrabajador {
             }
             cont3++;
         }
-        
         trabajador.setFechaNacTrab(fecha_nac);
         trabajadorFacade.edit(trabajador);
-    }  
+    } 
+    
+    public void handleFileUpload1(FileUploadEvent event) {  
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
+       
+        System.out.println("path:"+externalContext.getRealPath("/imagenes/"));
+       
+        System.out.println("file solo:" +event.getFile().getFileName());
+               
+       File result = new File(externalContext.getRealPath("/imagenes/")+File.separator + "temporal.jpg" );
+       
+        System.out.println("final file:"+result.getName());
+ 
+       
+          
+        try {
+ 
+            FileOutputStream fileOutputStream = new FileOutputStream(result);
+ 
+            byte[] buffer = new byte[51200];
+ 
+            int bulk;
+ 
+            // Here you get uploaded picture bytes, while debugging you can see that 34818
+            InputStream inputStream = event.getFile().getInputstream();
+           
+            while(true) {
+ 
+                bulk = inputStream.read(buffer);
+ 
+                if (bulk < 0) {
+ 
+                    break;
+ 
+                } //end of if
+ 
+                fileOutputStream.write(buffer, 0, bulk);
+                fileOutputStream.flush();
+ 
+            } //end fo while(true)
+ 
+            fileOutputStream.close();
+            inputStream.close();
+ 
+            FacesMessage msg = new FacesMessage("Succesful",event.getFile().getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+ 
+        }  catch (IOException e) {
+ 
+            e.printStackTrace();
+ 
+            FacesMessage error = new FacesMessage("The files were not uploaded!");
+            FacesContext.getCurrentInstance().addMessage(null, error);
+ 
+        }
+         
+   
+               
+    }
      
 
  
