@@ -1,80 +1,51 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
-      <h:outputScript library="js" name="common.js" target="head" /> 
-   
-      <script>
-
-        function muestra(datos){
-            var variable=datos.split("~");
-            var dia=parseInt(variable[7]);
-            var mes=parseInt(variable[8]);
-            var año = parseInt(variable[9]);
-            if(10>dia){dia = '0'+ dia;} 
-            if(10>mes){mes = '0'+ mes;}
-            document.getElementById("form:rut").value=variable[0];
-            document.getElementById("form:nombre").value=variable[1];
-            document.getElementById("form:apellido_paterno").value=variable[2];
-            document.getElementById("form:apellido_materno").value=variable[3];
-            document.getElementById("form:direccion").value=variable[4];
-            document.getElementById("form:telefono").value=variable[5];
-            document.getElementById("form:correo").value=variable[6];
-            document.getElementById("form:fecha_de_nacimiento_input").value=dia + '/' +mes+ '/'+ año;
-           
-       //     document.getElementById("form:cargo").value="Conductor";
-         //   document.getElementById("form:comuna").value="Cerro Navia";
-        }
-        
-    </script>
-
-    <h:head>
-        <title>Datos del Trabajador</title>
-    </h:head>
-    <h:body>
-        <h:form id="form">
-                <p:fieldset  legend="Administrar Trabajadores">
-            
-         <h:outputLabel value="Trabajadores:" />  
-        <h:outputText value="Trabajadores Registrados" style=" font-weight: bold"/>  
-        <p:selectOneListbox  value="#{managedBeanTrabajador.nombre}"  onchange="muestra(this.value);"  style="width:400px;">  
-            <f:selectItems value="#{managedBeanTrabajador.trabajadores}"    var="trabajadores" itemLabel="#{trabajadores.rutTrab}" itemValue="#{trabajadores.rutTrab}~#{trabajadores.nombreTrab}~#{trabajadores.apellidoPatTrab}~#{trabajadores.apellidoMatTrab}~#{trabajadores.direccionTrab}~#{trabajadores.telefonoTrab}~#{trabajadores.correoTrab}~#{trabajadores.fechaNacTrab.date}~#{trabajadores.fechaNacTrab.month+1}~#{trabajadores.fechaNacTrab.year+1900}"/>   
-        </p:selectOneListbox> 
-                </p:fieldset> 
-
-            <p:messages showDetail="true"  globalOnly="true"   autoUpdate="true" closable="true" />  
-            <p:fieldset legend="Agregar Nuevo Empleado">
-                <font color="red" > * Campos Obligatorios </font>
-
+    <ui:decorate template="/tema/welcomePrimefaces.xhtml">
+        <ui:define name="center">
+            <p:layout  style="height: 500px">
+                <p:layoutUnit  header="Mi foto:" position="east" size="500">
+                <h:form>
+                    <p:lightBox id="messages"  styleClass="imagebox">   
+                        <h:outputLink title="Sopranos 1">  
+                            <h:graphicImage    value="http://localhost:8080/WebApplicationRendezvous/imagenes/temporal.jpg" style="height: 150px; width: 150px;" />  
+                        </h:outputLink> 
+                    </p:lightBox >  
+                </h:form>  
                     <h:form enctype="multipart/form-data">  
-                        <p:fileUpload label="Examinar" cancelLabel="Cancelar" uploadLabel="Subir" fileUploadListener="#{managedBeanTrabajador.handleFileUpload}"  
+                        <p:fileUpload value="#{managedBeanTrabajador.file}" label="Examinar" cancelLabel="Cancelar"  uploadLabel="Subir" fileUploadListener="#{managedBeanTrabajador.handleFileUpload1}"  
                                 mode="advanced"   
                                 update="messages"  
                                 allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
                                 />  
                         <p:growl id="messages" showDetail="true"/>  
-                    </h:form>  
-                
+                </h:form>   
+                </p:layoutUnit>
+                <p:layoutUnit header="Agregar nuevo trabajador:" position="center">
+                <h:form>
+                <p:messages showDetail="true"  globalOnly="true"   autoUpdate="true" closable="true" />
+                <h:outputLabel style="color: red;" value=" * Campos Obligatorios " />
+                </h:form>
                 <p:panelGrid id="grid">
                     <p:row> 
                         <p:column colspan="4">                                            
-                            <h:outputLabel value="* Rut" />
+                            <h:outputLabel style="color: red;" value="* " /><h:outputLabel value="Rut" />
                         </p:column>
                         <p:column colspan="4">   
                             <p:inputText  requiredMessage="Completa este campo: Ingrese su RUT, sin puntos ni guión." id="rut" value="#{managedBeanTrabajador.rut_text}" label="Rut" required="true" title="Ingrese su RUT, sin puntos ni guión."/>
                         </p:column>
-                        <p:column colspan="4"> 
+                        <p:column  colspan="4"> 
                             <p:message display="text" for="rut" /> 
                             <p:watermark  for="rut" value="174269211" />
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column colspan="4">  
-                            <h:outputLabel value="* Nombre" />
+                            <h:outputLabel style="color: red;" value="* " /><h:outputLabel value="Nombre" />
                         </p:column> 
                         <p:column colspan="4">  
                             <p:inputText requiredMessage="Completa este campo: Ingrese sus nombres, use sólo letras." id="nombre" value="#{managedBeanTrabajador.nombre}" label="Nombre" required="true" title="Use sólo letras en este campo." />
@@ -86,7 +57,7 @@
                     </p:row>
                     <p:row>
                         <p:column colspan="4">  
-                            <h:outputLabel value="* Apellido paterno" />
+                            <h:outputLabel style="color: red;" value="* " /><h:outputLabel value="Apellido paterno" />
                         </p:column> 
                         <p:column colspan="4">  
                             <p:inputText requiredMessage="Completa este campo: Ingrese su pellido paterno, use sólo letras." id="apellido_paterno" value="#{managedBeanTrabajador.apellido_pat}" label="Apellido Paterno" required="true" title="Use sólo letras en este campo."/>
@@ -98,19 +69,19 @@
                     </p:row>
                     <p:row>
                         <p:column colspan="4">  
-                            <h:outputLabel value="* Apellido materno" />
+                            <h:outputLabel style="color: red;" value="* " /><h:outputLabel value="Apellido materno" />
                         </p:column>
                         <p:column colspan="4">  
-                            <p:inputText requiredMessage="Completa este campo: Ingrese su apellido materno, use sólo letras." id="apellido_materno" value="#{managedBeanTrabajador.apellido_mat}" label="Apellido Materno" required="true" title="Use sólo letras en este campo."/>
+                            <p:inputText requiredMessage="Completa este campo: Ingrese su apellido materno, use sólo letras." id="apellido_matermo" value="#{managedBeanTrabajador.apellido_mat}" label="Apellido Materno" required="true" title="Use sólo letras en este campo."/>
                         </p:column>
                         <p:column colspan="4"> 
-                            <p:message display="text" for="apellido_materno" />
-                            <p:watermark  for="apellido_materno" value="Godoy" />
+                            <p:message display="text" for="apellido_matermo" />
+                            <p:watermark  for="apellido_matermo" value="Godoy" />
                         </p:column> 
                     </p:row>
                     <p:row>
                         <p:column colspan="4">  
-                            <h:outputLabel value="* Dirección" />
+                            <h:outputLabel style="color: red;" value="* " /><h:outputLabel value="Dirección" />
                         </p:column>
                         <p:column colspan="4">  
                             <p:inputText requiredMessage="Completa este campo:  Ingrese su dirección." id="direccion" value="#{managedBeanTrabajador.direccion}" title="Ingrese su dirección." label="Dirección" required="true" />
@@ -122,10 +93,10 @@
                     </p:row>
                     <p:row> 
                         <p:column colspan="4">  
-                            <h:outputLabel value="* Fecha de nacimiento" />
+                            <h:outputLabel style="color: red;" value="* " /><h:outputLabel value="Fecha de nacimiento" />
                         </p:column>
                         <p:column colspan="4">  
-                            <p:calendar requiredMessage="Completa este campo:  Ingrese su fecha de nacimiento, siga el formato del ejemplo."  pattern="dd/MM/yyyy" id="fecha_de_nacimiento" value="#{managedBeanTrabajador.fecha_nac}" label="Fecha de nacimiento" required="true" title="Siga el formato del ejemplo."  showOn="button" /> 
+                            <p:calendar requiredMessage="Completa este campo:  Ingrese su fecha de nacimiento, siga el formato del ejemplo." id="fecha_de_nacimiento" pattern="dd/MM/yyyy" value="#{managedBeanTrabajador.fecha_nac}" label="Fecha de nacimiento" required="true" title="Siga el formato del ejemplo."  showOn="button" /> 
                         </p:column>
                         <p:column colspan="4"> 
                             <p:message display="text" for="fecha_de_nacimiento" />
@@ -134,7 +105,7 @@
                     </p:row>
                     <p:row> 
                         <p:column colspan="4">  
-                            <h:outputLabel value="* Teléfono" />
+                            <h:outputLabel style="color: red;" value="* " /><h:outputLabel value="Teléfono" />
                         </p:column>
                         <p:column colspan="4">  
                             <p:inputText requiredMessage="Completa este campo:  Ingrese su teléfono, use sólo números." id="telefono" value="#{managedBeanTrabajador.telefono_text}" label="Teléfono" required="true" title="Use sólo números en este campo."/>
@@ -146,7 +117,7 @@
                     </p:row>
                     <p:row> 
                         <p:column colspan="4">  
-                            <h:outputLabel value="* Correo" />
+                            <h:outputLabel style="color: red;" value="* " /><h:outputLabel value="Correo" />
                         </p:column>
                         <p:column colspan="4">  
                             <p:inputText requiredMessage="Completa este campo: Ingrese su correo, siga el formato del ejemplo." id="correo" value="#{managedBeanTrabajador.correo}" label="Correo" required="true" title="Siga el formato del ejemplo." />
@@ -177,18 +148,12 @@
                         </p:column> 
                     </p:row>
                 </p:panelGrid>
-                <p:lightBox styleClass="imagebox">   
-  <h:outputLink value="../imagenes/downloaded_optimus.jpg" title="Sopranos 1">  
-        <h:graphicImage value="/imagenes/downloaded_optimus.jpg"/>  
-</h:outputLink> 
-                </p:lightBox >   
-
-                <p:commandButton  id="infoButton" update="grid" actionListener="#{managedBeanTrabajador.addInfo2}" value="Modificar"  action="#{managedBeanTrabajador.modificarTrabajador()}" />
-               <p:commandButton update="grid" actionListener="#{managedBeanTrabajador.addInfo3}" value="Eliminar" action="#{managedBeanTrabajador.borrarTrabajador()}"/>
-               <p:commandButton value="Cancelar" type="reset"/>
-
-            </p:fieldset>
-        </h:form>
-    </h:body>
+                <p:commandButton id="infoButton" update="grid" actionListener="#{managedBeanTrabajador.addInfo}" value="Ingresar" action="#{managedBeanTrabajador.nuevoTrabajador()}" />
+                <p:commandButton value="Cancelar" type="reset"/> 
+                </p:layoutUnit>
+     
+            </p:layout>
+        </ui:define>
+    </ui:decorate>
 </html>
 

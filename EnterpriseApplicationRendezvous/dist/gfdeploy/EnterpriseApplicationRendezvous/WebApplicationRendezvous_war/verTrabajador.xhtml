@@ -9,27 +9,27 @@
       <h:outputScript library="js" name="common.js" target="head" /> 
    
       <script>
+
         function muestra(datos){
             var variable=datos.split("~");
-            
-            var fecha= variable[5].split("-");
-            var dia=parseInt(fecha[0]);    
-            var mes=parseInt(fecha[1]);
-            var año=parseInt(fecha[2]);    
-            var fechaF=new Date(año,mes,dia);
+            var dia=parseInt(variable[7]);
+            var mes=parseInt(variable[8]);
+            var año = parseInt(variable[9]);
+            if(10>dia){dia = '0'+ dia;} 
+            if(10>mes){mes = '0'+ mes;}
             document.getElementById("form:rut").value=variable[0];
             document.getElementById("form:nombre").value=variable[1];
             document.getElementById("form:apellido_paterno").value=variable[2];
             document.getElementById("form:apellido_materno").value=variable[3];
             document.getElementById("form:direccion").value=variable[4];
-            document.getElementById("form:fecha_de_nacimiento").value=fechaF;
-            document.getElementById("form:telefono").value=variable[6];
-            document.getElementById("form:correo").value=variable[7];
-            
+            document.getElementById("form:telefono").value=variable[5];
+            document.getElementById("form:correo").value=variable[6];
+            document.getElementById("form:fecha_de_nacimiento_input").value=dia + '/' +mes+ '/'+ año;
            
        //     document.getElementById("form:cargo").value="Conductor";
          //   document.getElementById("form:comuna").value="Cerro Navia";
         }
+        
     </script>
 
     <h:head>
@@ -41,8 +41,8 @@
             
          <h:outputLabel value="Trabajadores:" />  
         <h:outputText value="Trabajadores Registrados" style=" font-weight: bold"/>  
-        <p:selectOneListbox  value="#{managedBeanTrabajador.nombre}" onchange="muestra(this.value);"  style="width:400px;">  
-            <f:selectItems value="#{managedBeanTrabajador.trabajadores}"    var="trabajadores" itemLabel="#{trabajadores.rutTrab}" itemValue="#{trabajadores.rutTrab}~#{trabajadores.nombreTrab}~#{trabajadores.apellidoPatTrab}~#{trabajadores.apellidoMatTrab}~#{trabajadores.direccionTrab}~1990-12-12~#{trabajadores.telefonoTrab}~#{trabajadores.correoTrab}~#{trabajadores.idCargo}~#{trabajadores.idComuna}"/>   
+        <p:selectOneListbox  value="#{managedBeanTrabajador.nombre}"  onchange="muestra(this.value);"  style="width:400px;">  
+            <f:selectItems value="#{managedBeanTrabajador.trabajadores}"    var="trabajadores" itemLabel="#{trabajadores.rutTrab}" itemValue="#{trabajadores.rutTrab}~#{trabajadores.nombreTrab}~#{trabajadores.apellidoPatTrab}~#{trabajadores.apellidoMatTrab}~#{trabajadores.direccionTrab}~#{trabajadores.telefonoTrab}~#{trabajadores.correoTrab}~#{trabajadores.fechaNacTrab.date}~#{trabajadores.fechaNacTrab.month+1}~#{trabajadores.fechaNacTrab.year+1900}"/>   
         </p:selectOneListbox> 
                 </p:fieldset> 
 
@@ -125,7 +125,7 @@
                             <h:outputLabel value="* Fecha de nacimiento" />
                         </p:column>
                         <p:column colspan="4">  
-                            <p:calendar requiredMessage="Completa este campo:  Ingrese su fecha de nacimiento, siga el formato del ejemplo." id="fecha_de_nacimiento" pattern="dd/MM/yyyy" value="#{managedBeanTrabajador.fecha_nac}" label="Fecha de nacimiento" required="true" title="Siga el formato del ejemplo."  showOn="button" /> 
+                            <p:calendar requiredMessage="Completa este campo:  Ingrese su fecha de nacimiento, siga el formato del ejemplo."  pattern="dd/MM/yyyy" id="fecha_de_nacimiento" value="#{managedBeanTrabajador.fecha_nac}" label="Fecha de nacimiento" required="true" title="Siga el formato del ejemplo."  showOn="button" /> 
                         </p:column>
                         <p:column colspan="4"> 
                             <p:message display="text" for="fecha_de_nacimiento" />

@@ -4,6 +4,7 @@
  */
 package managedbeans;
 
+import javax.persistence.NamedQueries;
 import entities.Comuna;
 import entities.TipoCargo;
 import entities.Trabajador;
@@ -46,14 +47,6 @@ public class ManagedBeanTrabajador {
     private int rut;
     private String rut_text;
     private int cargo;
-
-    public byte[] getImg() {
-        return img;
-    }
-
-    public void setImg(byte[] img) {
-        this.img = img;
-    }
     private byte[] img;
     private String text;  
     private String Cargo_nombre;
@@ -69,13 +62,21 @@ public class ManagedBeanTrabajador {
     private List<Trabajador> trabajadores;
     private TipoCargo tipoCargo;
     private Comuna comuna;
+
+
     
 
     @PostConstruct
     public void init(){
         trabajadores = trabajadorFacade.findAll();
     }
-    
+        public byte[] getImg() {
+        return img;
+    }
+
+    public void setImg(byte[] img) {
+        this.img = img;
+    }
     public UploadedFile getFile() {
         return file;
     }
@@ -334,6 +335,11 @@ public class ManagedBeanTrabajador {
         trabajadorFacade.edit(trabajador);
     } 
     
+    public void fecha(String fecha){
+        System.out.println(fecha);
+        Date fe = new Date(90, 05, 9);
+        fecha_nac=fe;
+    }
     public void handleFileUpload1(FileUploadEvent event) {  
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();

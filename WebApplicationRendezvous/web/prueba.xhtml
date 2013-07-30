@@ -25,10 +25,10 @@
             document.getElementById("form:telefono").value=variable[5];
             document.getElementById("form:correo").value=variable[6];
             document.getElementById("form:fecha_de_nacimiento_input").value=dia + '/' +mes+ '/'+ año;
-           
-       //     document.getElementById("form:cargo").value="Conductor";
-         //   document.getElementById("form:comuna").value="Cerro Navia";
+            document.getElementById("form:cargo_label").innerHTML=variable[10]; 
+            document.getElementById("form:comuna_label").innerHTML=variable[11];  
         }
+
         
     </script>
 
@@ -36,13 +36,13 @@
         <title>Datos del Trabajador</title>
     </h:head>
     <h:body>
-        <h:form id="form">
-                <p:fieldset  legend="Administrar Trabajadores">
+        <h:form  id="form">
+            <p:fieldset  legend="Administrar Trabajadores">
             
          <h:outputLabel value="Trabajadores:" />  
         <h:outputText value="Trabajadores Registrados" style=" font-weight: bold"/>  
-        <p:selectOneListbox  value="#{managedBeanTrabajador.nombre}"  onchange="muestra(this.value);"  style="width:400px;">  
-            <f:selectItems value="#{managedBeanTrabajador.trabajadores}"    var="trabajadores" itemLabel="#{trabajadores.rutTrab}" itemValue="#{trabajadores.rutTrab}~#{trabajadores.nombreTrab}~#{trabajadores.apellidoPatTrab}~#{trabajadores.apellidoMatTrab}~#{trabajadores.direccionTrab}~#{trabajadores.telefonoTrab}~#{trabajadores.correoTrab}~#{trabajadores.fechaNacTrab.date}~#{trabajadores.fechaNacTrab.month+1}~#{trabajadores.fechaNacTrab.year+1900}"/>   
+        <p:selectOneListbox    value="#{managedBeanTrabajador.nombre}"   onchange="muestra(this.value);" style="width:400px;">  
+            <f:selectItems  id="selec"  value="#{managedBeanTrabajador.trabajadores}"     var="trabajadores" itemLabel="#{trabajadores.rutTrab}" itemValue="#{trabajadores.rutTrab}~#{trabajadores.nombreTrab}~#{trabajadores.apellidoPatTrab}~#{trabajadores.apellidoMatTrab}~#{trabajadores.direccionTrab}~#{trabajadores.telefonoTrab}~#{trabajadores.correoTrab}~#{trabajadores.fechaNacTrab.date}~#{trabajadores.fechaNacTrab.month+1}~#{trabajadores.fechaNacTrab.year+1900}~#{trabajadores.idCargo.nombreCargo}~#{trabajadores.idComuna.nombreComuna}"/>   
         </p:selectOneListbox> 
                 </p:fieldset> 
 
@@ -59,7 +59,7 @@
                         <p:growl id="messages" showDetail="true"/>  
                     </h:form>  
                 
-                <p:panelGrid id="grid">
+                <p:panelGrid  id="grid">
                     <p:row> 
                         <p:column colspan="4">                                            
                             <h:outputLabel value="* Rut" />
@@ -156,13 +156,13 @@
                             <p:watermark for="correo" value="alguien@ejemplo.cl" /> 
                        </p:column> 
                     </p:row>
-                    <p:row> 
+                    <p:row > 
                         <p:column colspan="4">   
                             <h:outputText value="Cargo" />  
                         </p:column>
-                        <p:column colspan="4">  
-                            <p:selectOneMenu value="#{managedBeanTrabajador.cargo_nombre}">   
-                                <f:selectItems value="#{managedBeanCargo.tipoCargos}" var="cargos" itemLabel="#{cargos.nombreCargo}" itemValue="#{cargos}"/>  
+                        <p:column  colspan="4">  
+                            <p:selectOneMenu   id="cargo"   value="#{managedBeanTrabajador.cargo_nombre}">   
+                                <f:selectItems  value="#{managedBeanCargo.tipoCargos}" var="cargos" itemLabel="#{cargos.nombreCargo}" itemValue="#{cargos}"/>  
                             </p:selectOneMenu>
                         </p:column>
                     </p:row>
@@ -171,7 +171,7 @@
                             <h:outputText value="Comuna" /> 
                         </p:column>
                         <p:column colspan="4">  
-                            <p:selectOneMenu value="#{managedBeanTrabajador.comuna_nombre}">   
+                            <p:selectOneMenu id="comuna" value="#{managedBeanTrabajador.comuna_nombre}">   
                                 <f:selectItems value="#{managedBeanComuna.comunas}" var="comunas" itemLabel="#{comunas.nombreComuna}" itemValue="#{comunas}"/>  
                             </p:selectOneMenu>
                         </p:column> 
@@ -184,7 +184,7 @@
                 </p:lightBox >   
 
                 <p:commandButton  id="infoButton" update="grid" actionListener="#{managedBeanTrabajador.addInfo2}" value="Modificar"  action="#{managedBeanTrabajador.modificarTrabajador()}" />
-               <p:commandButton update="grid" actionListener="#{managedBeanTrabajador.addInfo3}" value="Eliminar" action="#{managedBeanTrabajador.borrarTrabajador()}"/>
+               <p:commandButton update="selec" actionListener="#{managedBeanTrabajador.addInfo3}" value="Eliminar" action="#{managedBeanTrabajador.borrarTrabajador()}"/>
                <p:commandButton value="Cancelar" type="reset"/>
 
             </p:fieldset>

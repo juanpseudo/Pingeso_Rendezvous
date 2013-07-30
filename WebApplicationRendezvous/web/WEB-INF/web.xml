@@ -20,7 +20,7 @@
     </session-config>
     <context-param>
            <param-name>primefaces.THEME</param-name>
-           <param-value>cupertino</param-value>
+           <param-value>afterdark</param-value>
    </context-param>    
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
@@ -48,7 +48,7 @@
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <servlet-name>Faces Servlet</servlet-name>
     </filter-mapping>
-    
+
     
 
 </web-app>
